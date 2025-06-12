@@ -6,7 +6,7 @@ from linebot.models import TextSendMessage
 
 app = Flask(__name__)
 CHANNEL_SECRET = "e042abfbb258184b5f014609d19dc52b"
-ACCESS_TOKEN = "qW8jaVO+..."  # 실제 토큰 입력
+ACCESS_TOKEN = "qW8jaVO+EKprbz/y6bPwMAcWhGLCgTS822GZGtJ3vjZsmEvH/+tPRP0BWTWktTDnuWjyfjmltnt86SdxSiZIsXdNwPVwjYRVLOz+UqWVoPBzZYMSeCpwErR7Urfk+szctzz01Tw6lxpeUOU88LvH1wdB04t89/1O/w1cDnyilFU="  # 실제 토큰 입력
 line_bot_api = LineBotApi(ACCESS_TOKEN)
 
 def handle_event(event):
