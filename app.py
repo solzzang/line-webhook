@@ -1,12 +1,14 @@
 from flask import Flask, request
 import json, hmac, hashlib, base64
-import threading  # 👈 추가
+import threading
+import os
 from linebot import LineBotApi
 from linebot.models import TextSendMessage
 
 app = Flask(__name__)
 CHANNEL_SECRET = "e042abfbb258184b5f014609d19dc52b"
-ACCESS_TOKEN = "qW8jaVO+EKprbz/y6bPwMAcWhGLCgTS822GZGtJ3vjZsmEvH/+tPRP0BWTWktTDnuWjyfjmltnt86SdxSiZIsXdNwPVwjYRVLOz+UqWVoPBzZYMSeCpwErR7Urfk+szctzz01Tw6lxpeUOU88LvH1wdB04t89/1O/w1cDnyilFU="  # 실제 토큰 입력
+ACCESS_TOKEN = "qW8jaVO+EKprbz/y6bPwMAcWhGLCgTS822GZGtJ3vjZsmEvH/+tPRP0BWTWktTDnuWjyfjmltnt86SdxSiZIsXdNwPVwjYRVLOz+UqWVoPBzZYMSeCpwErR7Urfk+szctzz01Tw6lxpeUOU88LvH1wdB04t89/1O/w1cDnyilFU="
+
 line_bot_api = LineBotApi(ACCESS_TOKEN)
 
 def handle_event(event):
@@ -40,7 +42,10 @@ def webhook():
     events = json.loads(body).get("events", [])
     for event in events:
         if event.get("type") == "message":
-            # 🎯 응답 지연 방지를 위해 별도 스레드로 처리
             threading.Thread(target=handle_event, args=(event,)).start()
 
-    return "OK"  # 🔥 빠르게 응답 먼저 보냄
+    return "OK"
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)
